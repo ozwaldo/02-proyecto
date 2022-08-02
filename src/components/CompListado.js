@@ -13,11 +13,28 @@ export const CompListado = ({listaState, setListaState}) => {
 
     const obtenerPeliculas = () => {
 
-        let peliculas = JSON.parse(localStorage.getItem("peliculas"));
-        
-        setListaState(peliculas)
-        
+        let peliculas = JSON.parse(localStorage.getItem("peliculas"));        
+        setListaState(peliculas);
+        return peliculas;
         //console.log(peliculas)
+    }
+
+    const clickBorrarPelicula = (id) => {
+        console.log(obtenerPeliculas());
+        let arrayPeliculas = arrayRemove(obtenerPeliculas(),id);
+        console.log(id, arrayPeliculas);
+
+        setListaState(arrayPeliculas);
+
+        localStorage.setItem("peliculas",JSON.stringify(arrayPeliculas));
+        
+
+    }
+
+    const arrayRemove = (arreglo, value) => {
+        return arreglo.filter(function(ele){
+            return ele.id !== value
+        });
     }
 
     return (
@@ -29,7 +46,7 @@ export const CompListado = ({listaState, setListaState}) => {
                     <p className="description">{pelicula.descripcion}</p>
 
                     <button className="edit">Editar</button>
-                    <button className="delete">Borrar</button>
+                    <button className="delete" onClick={()=>clickBorrarPelicula(pelicula.id)}>Borrar</button>
                 </article>)
             })}
         </section>

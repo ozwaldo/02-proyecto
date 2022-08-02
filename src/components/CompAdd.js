@@ -31,7 +31,7 @@ export const CompAdd = ({listaState, setListaState}) => {
         <div className="add">
             <h3 className="title">Añadir pelicula</h3>
             
-            {peliculaState &&
+            {peliculaState.length > 0 &&
                 <p>
                     Prueba {peliculaState.titulo}
                 </p>

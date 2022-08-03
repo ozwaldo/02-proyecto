@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { CompAdd } from "./components/CompAdd";
 import { CompBuscador } from "./components/CompBuscador";
@@ -8,6 +8,17 @@ function App() {
 
   const [listaState, setListaState] = useState([]);
 
+  useEffect(() => {
+    obtenerPeliculas();
+  }, []);
+
+  const obtenerPeliculas = () => {
+    let peliculas = JSON.parse(localStorage.getItem("peliculas"));
+    setListaState(peliculas);
+
+    return peliculas;
+    //console.log(peliculas)
+  };
 
   return (
     <div className="App">
@@ -40,17 +51,18 @@ function App() {
         </nav>
 
         {/* <!--Contenido principal--> */}
-        <CompListado listaState = {listaState} 
-          setListaState = {setListaState} />
+        <CompListado listaState={listaState} setListaState={setListaState} />
 
         {/* <!--Barra lateral--> */}
         <aside className="lateral">
+          <CompBuscador listaState={listaState} setListaState={setListaState}></CompBuscador>
 
-          <CompBuscador></CompBuscador>
+          <CompAdd
+            listaState={listaState}
+            setListaState={setListaState}
+          ></CompAdd>
 
-          <CompAdd listaState = {listaState} 
-          setListaState = {setListaState}></CompAdd>
-
+          
         </aside>
 
         {/* <!--Pie de página--> */}
